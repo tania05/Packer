@@ -9,8 +9,8 @@
 		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
 		"post_shutdown_delay": "10s",
 		
-		"output_directory": "bin/iso_builder",
-		"vm_name": "iso_builder",
+		"output_directory": "bin/ubuntu_64_desktop_iso",
+		"vm_name": "ubuntu_64_desktop_iso",
 		"skip_export": true
 	}],
 	

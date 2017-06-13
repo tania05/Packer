@@ -25,7 +25,8 @@ d-i console-setup/ask_detect boolean false
 d-i console-setup/layoutcode string us
 
 # Network
-d-i netcfg/get_hostname string unassigned-hostname
+#d-i netcfg/get_hostname string unassigned-hostname
+d-i netcfg/get_hostname string ubuntu-desktop
 d-i netcfg/get_domain string unassigned-domain
 d-i netcfg/choose_interface select auto
 
@@ -41,22 +42,31 @@ d-i apt-setup/multiverse boolean true
 d-i apt-setup/restricted boolean true
 d-i apt-setup/universe boolean true
 
+# Choose additional packages to install (openssh)
+d-i pkgsel/include string openssh-server
+
 # Users
 d-i passwd/user-fullname string User
 d-i passwd/username string user
 d-i passwd/user-password-crypted password 6otcEbm8276Zc
 d-i user-setup/allow-password-weak boolean true
 d-i passwd/user-default-groups string adm audio cdrom dip lpadmin sudo plugdev sambashare video
-d-i passwd/root-login boolean true
-d-i passwd/root-password-crypted password 6otcEbm8276Zc
+
+# No root user
+d-i passwd/root-login boolean false
+#d-i passwd/root-password-crypted password 6otcEbm8276Zc
 
 # Grub
 d-i grub-installer/grub2_instead_of_grub_legacy boolean true
 d-i grub-installer/only_debian boolean true
 d-i finish-install/reboot_in_progress note
 
+
+
 # Custom Commands
 ubiquity ubiquity/success_command string \
-sed -i -e 's/dns=dnsmasq/#dns=dnsmasq/' /target/etc/NetworkManager/NetworkManager.conf ;\
-cp -a /cdrom/scripts/ /target/root/ ;\
-cp -a /cdrom/salt/ /target/root/
+   echo "auto enp0s3" >> /etc/network/interfaces; \
+   echo "iface enp0s3 inet dhcp" >> /etc/network/interfaces; \
+   ifup enp0s3; \
+   apt-get update -y; \
+   in-target apt-get install -y openssh-server;
