@@ -16,11 +16,11 @@
 	
 	"provisioners": [{
 		"type": "file",
-		"source": "ubuntu_64_desktop/ks.preseed",
+		"source": "ubuntu_64_desktop_iso/ks.preseed",
 		"destination": "ks.preseed"
 	}, {
 		"type": "file",
-		"source": "ubuntu_64_desktop/txt.cfg",
+		"source": "ubuntu_64_desktop_iso/txt.cfg",
 		"destination": "txt.cfg"
 	}, {
 		"type": "shell",
@@ -41,7 +41,7 @@
 	}, {
 		"type": "file",
 		"source": "out.iso",
-		"destination": "bin/iso_builder/ubuntu_64_desktop.iso",
+		"destination": "bin/ubuntu_64_desktop_iso/ubuntu_64_desktop_iso.iso",
 		"direction": "download"
 	}]
 }
