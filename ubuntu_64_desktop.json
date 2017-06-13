@@ -1,0 +1,48 @@
+{
+	"builders": [{
+		"type": "virtualbox-ovf",
+		"source_path": "bin/ubuntu_64/ubuntu_64.ovf",
+		"ssh_username": "user",
+		"ssh_password": "user",
+		"headless": true,
+		
+		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
+		"post_shutdown_delay": "10s",
+		
+		"output_directory": "bin/iso_builder",
+		"vm_name": "iso_builder",
+		"skip_export": true
+	}],
+	
+	"provisioners": [{
+		"type": "file",
+		"source": "ubuntu_64_desktop/ks.preseed",
+		"destination": "ks.preseed"
+	}, {
+		"type": "file",
+		"source": "ubuntu_64_desktop/txt.cfg",
+		"destination": "txt.cfg"
+	}, {
+		"type": "shell",
+		"inline": [
+			"wget -O ud.iso http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso",
+			"echo 'user' | sudo -S apt-get install mkisofs -y",
+			
+			"echo 'user' | sudo -S mkdir -p /mnt/iso",
+			"echo 'user' | sudo -S mount -o loop ud.iso /mnt/iso",
+			"echo 'user' | sudo -S mkdir -p /opt/ubuntuiso",
+			"echo 'user' | sudo -S cp -rT /mnt/iso /opt/ubuntuiso",
+			
+			"echo 'user' | sudo -S cp txt.cfg /opt/ubuntuiso/isolinux/txt.cfg",
+			"echo 'user' | sudo -S cp ks.preseed /opt/ubuntuiso/ks.preseed",
+			
+			"echo 'user' | sudo -S mkisofs -D -r -V \"UNATTENDED_UBUNTU\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o out.iso /opt/ubuntuiso"
+		]
+	}, {
+		"type": "file",
+		"source": "out.iso",
+		"destination": "bin/iso_builder/ubuntu_64_desktop.iso",
+		"direction": "download"
+	}]
+}
+

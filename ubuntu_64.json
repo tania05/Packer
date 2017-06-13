@@ -29,41 +29,33 @@
 
         "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
 
-		"boot_command": [
-			"<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-			"/install/vmlinuz<wait>",
-			" auto<wait>",
-			" console-setup/ask_detect=false<wait>",
-			" console-setup/layoutcode=us<wait>",
-			" console-setup/modelcode=pc105<wait>",
-			" debconf/frontend=noninteractive<wait>",
-			" debian-installer=en_US<wait>",
-			" fb=false<wait>",
-			" initrd=/install/initrd.gz<wait>",
-			" kbd-chooser/method=us<wait>",
-			" keyboard-configuration/layout=USA<wait>",
-			" keyboard-configuration/variant=USA<wait>",
-			" locale=en_US<wait>",
-			" netcfg/get_domain=vm<wait>",
-			" netcfg/get_hostname={{user `hostname`}}<wait>",
-			" grub-installer/bootdev=/dev/sda<wait>",
-			" noapic<wait>",
-			" preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
-			" -- <wait>",
-			"<enter><wait>"
-		],
-
-        "keep_registered": true,
-        "skip_export": true
-    }],
-    "provisioners": [{
-        "type": "shell",
-        "inline": [
-            "echo test",
-            "sleep 10"
-        ]
+        "boot_command": [
+            "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+            "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+            "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+            "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+            "/install/vmlinuz<wait>",
+            " auto<wait>",
+            " console-setup/ask_detect=false<wait>",
+            " console-setup/layoutcode=us<wait>",
+            " console-setup/modelcode=pc105<wait>",
+            " debconf/frontend=noninteractive<wait>",
+            " debian-installer=en_US<wait>",
+            " fb=false<wait>",
+            " initrd=/install/initrd.gz<wait>",
+            " kbd-chooser/method=us<wait>",
+            " keyboard-configuration/layout=USA<wait>",
+            " keyboard-configuration/variant=USA<wait>",
+            " locale=en_US<wait>",
+            " netcfg/get_domain=vm<wait>",
+            " netcfg/get_hostname={{user `hostname`}}<wait>",
+            " grub-installer/bootdev=/dev/sda<wait>",
+            " noapic<wait>",
+            " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+            " -- <wait>",
+            "<enter><wait>"
+        ],
+		"output_directory": "bin/ubuntu_64",
+		"vm_name": "ubuntu_64"
     }]
 }
