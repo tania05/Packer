@@ -23,9 +23,13 @@
 		"source": "ubuntu_64_desktop_iso/txt.cfg",
 		"destination": "txt.cfg"
 	}, {
+		"type": "file",
+		"source": "cache/ubuntu-16.04.2-desktop-amd64.iso",
+		"destination": "ud.iso"
+	}, {
 		"type": "shell",
 		"inline": [
-			"wget -O ud.iso http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso",
+			"#wget -O ud.iso http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso",
 			"echo 'user' | sudo -S apt-get install mkisofs -y",
 			
 			"echo 'user' | sudo -S mkdir -p /mnt/iso",

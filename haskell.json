@@ -1,7 +1,7 @@
 {
 	"builders": [{
 		"type": "virtualbox-ovf",
-		"source_path": "bin/ubuntu_64/ubuntu_64.ovf",
+		"source_path": "bin/ubuntu_64_desktop/ubuntu_64_desktop.ovf",
 		"ssh_username": "user",
 		"ssh_password": "user",
 		"headless": true,
@@ -9,16 +9,29 @@
 		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
 		"post_shutdown_delay": "10s",
 		
-		"output_directory": "bin/ceng420",
-		"vm_name": "ceng420",
-		"skip_export": true
+		"output_directory": "bin/haskell",
+		"vm_name": "haskell"
 	}],
 	
 	"provisioners": [{
+		"type": "file",
+		"source": "cache/ideaIC-2017.1.4.tar.gz",
+		"destination": "ideaIC-2017.1.4.tar.gz"
+	}, {
+		"type": "file",
+		"source": "cache/haskell-plugin.zip",
+		"destination": "haskell-plugin.zip"
+	}, {
 		"type": "shell",
 		"inline": [
-			"#echo 'Running apt-get update'",
-			"#echo 'user' | sudo -S apt-get update",
+			"echo 'Install VBoxAdditions'",
+			"echo 'user' | sudo -S mount --source VBoxGuestAdditions.iso --target mnt",
+			"echo 'user' | sudo -S mnt/VBoxLinuxAdditions.run",
+			"echo 'user' | sudo -S umount mnt",
+
+
+			"echo 'Running apt-get update'",
+			"echo 'user' | sudo -S apt-get update",
 			
 			"wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
 			"chmod +x installhaskell.sh",
