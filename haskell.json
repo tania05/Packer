@@ -33,8 +33,8 @@
 			"rmdir mnt",
 
 			"echo 'Setting up IntelliJ'",
+			"echo '//TODO auto install plugin + add on first run execution'",
 			"echo 'user' | sudo -S tar xf ideaIC-2017.1.4.tar.gz -C /opt/",
-			"echo 'user' | sudo -S cp haskell-plugin.zip /opt/idea-IC-171.4694.23/plugins/haskell-plugin.zip",
 			"echo 'Creating first time install script'",
 			"mkdir Desktop",
 			"touch ~/Desktop/runme.sh",
@@ -50,21 +50,15 @@
 
 			"echo 'Install zlib'",
 			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
-
-			"echo 'Install Haskell/Cabal (Requires zlib already installed)'",
-			"echo 'user' | sudo -S apt-get install calbal-install'",
-			"cabal update",
-			"cabal install cabal-install Cabal #update cabal, implicit dependency on zlib",
-			"cabal install happy #depends on cabal",
-			"cabal install ghc-mod #indirect dependency on happy",
 			
-			"#wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
-			"#chmod +x installhaskell.sh",
-			"#echo 'user' | sudo -S ./installhaskell.sh",
-			"#rm installhaskell.sh",
-			"#stack setup",
-			"#stack install ghc-mod",
-			"#echo \"PATH=`stack path --compiler-bin`:\\$PATH\" >> ~/.profile",
+			"wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
+			"chmod +x installhaskell.sh",
+			"echo 'user' | sudo -S ./installhaskell.sh",
+			"rm installhaskell.sh",
+			"stack setup",
+			"stack install hindent",
+			"stack install stylish-haskell",
+			"echo \"PATH=`stack path --compiler-bin`:\\$PATH\" >> ~/.profile",
 
 
 
