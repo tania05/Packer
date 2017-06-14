@@ -10,8 +10,8 @@ cache/ubuntu-16.04.2-desktop-amd64.iso:
 cache/ideaIC-2017.1.4.tar.gz:
 	powershell -NoProfile -Command "Invoke-WebRequest https://download.jetbrains.com/idea/ideaIC-2017.1.4.tar.gz -OutFile cache/ideaIC-2017.1.4.tar.gz"
 
-cache/haskell-plugin.zip:
-	powershell -NoProfile -Command "Invoke-WebRequest https://plugins.jetbrains.com/plugin/download?updateId=20874 -OutFile cache/haskell-plugin.zip"
+cache/intellij-haskell.zip:
+	powershell -NoProfile -Command "Invoke-WebRequest https://plugins.jetbrains.com/plugin/download?updateId=34477 -OutFile cache/intellij-haskell.zip"
 
 
 ##########################
@@ -37,5 +37,5 @@ ubuntu_64_server: bin/ubuntu_64/ubuntu_64.ovf
 # Final vm configs #
 ####################
 
-haskell: bin/ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/haskell-plugin.zip
+haskell: bin/ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/intellij-haskell.zip
 	packer build --force haskell.json

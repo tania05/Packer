@@ -19,8 +19,8 @@
 		"destination": "ideaIC-2017.1.4.tar.gz"
 	}, {
 		"type": "file",
-		"source": "cache/haskell-plugin.zip",
-		"destination": "haskell-plugin.zip"
+		"source": "cache/intellij-haskell.zip",
+		"destination": "intellij-haskell.zip"
 	}, {
 		"type": "shell",
 		"inline": [
@@ -45,14 +45,29 @@
 
 			"echo 'Fixes for slow machines'",
 			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
-
 			"echo 'Running apt-get update'",
 			"echo 'user' | sudo -S apt-get update",
+
+			"echo 'Install zlib'",
+			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
+
+			"echo 'Install Haskell/Cabal (Requires zlib already installed)'",
+			"echo 'user' | sudo -S apt-get install calbal-install'",
+			"cabal update",
+			"cabal install cabal-install Cabal #update cabal, implicit dependency on zlib",
+			"cabal install happy #depends on cabal",
+			"cabal install ghc-mod #indirect dependency on happy",
 			
-			"wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
-			"chmod +x installhaskell.sh",
-			"echo 'user' | sudo -S ./installhaskell.sh",
-			"rm installhaskell.sh",
+			"#wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
+			"#chmod +x installhaskell.sh",
+			"#echo 'user' | sudo -S ./installhaskell.sh",
+			"#rm installhaskell.sh",
+			"#stack setup",
+			"#stack install ghc-mod",
+			"#echo \"PATH=`stack path --compiler-bin`:\\$PATH\" >> ~/.profile",
+
+
+
 			
 			"echo 'Install vim'",
 			"echo 'user' | sudo -S apt-get install vim -y",
