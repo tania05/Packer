@@ -51,6 +51,9 @@
 			"echo 'Install zlib'",
 			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
 			
+			
+			
+			"echo 'Install haskell'",
 			"wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
 			"chmod +x installhaskell.sh",
 			"echo 'user' | sudo -S ./installhaskell.sh",
@@ -58,7 +61,6 @@
 			"stack setup",
 			"stack install hindent",
 			"stack install stylish-haskell",
-			"echo \"PATH=`stack path --compiler-bin`:\\$PATH\" >> ~/.profile",
 
 
 
