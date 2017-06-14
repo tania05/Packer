@@ -24,6 +24,7 @@
 	}, {
 		"type": "shell",
 		"inline": [
+
 			"echo 'Install VBoxAdditions'",
 			"mkdir mnt",
 			"echo 'user' | sudo -S mount --source VBoxGuestAdditions.iso --target mnt",
@@ -38,7 +39,12 @@
 			"mkdir Desktop",
 			"touch ~/Desktop/runme.sh",
 			"chmod +x ~/Desktop/runme.sh",
-			"echo 'sudo /opt/idea-IC-171.4694.2/idea.sh' >> ~/Desktop/runme.sh",
+			"echo 'sudo /opt/idea-IC-171.4694.23/idea.sh' >> ~/Desktop/runme.sh",
+
+
+
+			"echo 'Fixes for slow machines'",
+			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
 
 			"echo 'Running apt-get update'",
 			"echo 'user' | sudo -S apt-get update",
