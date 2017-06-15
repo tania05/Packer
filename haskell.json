@@ -68,8 +68,10 @@
 			"echo 'Install vim'",
 			"echo 'user' | sudo -S apt-get install vim -y",
 			
-			"echo 'Install git'",
-			"echo 'user' | sudo -S apt-get install git -y"
+			"echo 'Install git and set vim as default editor'",
+			"echo 'user' | sudo -S apt-get install git -y",
+			"git config --global core.editor vim",
+			"git config --global merge.tool vimdiff"
 		]
 	}]
 }
