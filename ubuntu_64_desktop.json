@@ -1,8 +1,7 @@
 {
     "variables": {
         "ssh_name": "user",
-        "ssh_pass": "user",
-        "hostname": "packer"
+        "ssh_pass": "user"
     },
 
     "builders": [{
@@ -29,5 +28,14 @@
 
         "output_directory": "bin/ubuntu_64_desktop",
         "vm_name": "ubuntu_64_desktop"
+    }],
+
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+            "echo 'Disable the ubuntu updater'",
+            "echo 'user' | sudo -S systemctl disable apt-daily.service",
+            "echo 'user' | sudo -S systemctl disable apt-daily.timer"
+        ]
     }]
 }
