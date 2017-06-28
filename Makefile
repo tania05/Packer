@@ -13,6 +13,9 @@ cache/ideaIC-2017.1.4.tar.gz:
 cache/intellij-haskell.zip:
 	powershell -NoProfile -Command "Invoke-WebRequest https://plugins.jetbrains.com/plugin/download?updateId=34477 -OutFile cache/intellij-haskell.zip"
 
+cache/IdeaVim.zip:
+	powershell -NoProfile -Command "Invoke-WebRequest https://plugins.jetbrains.com/plugin/download?updateId=31805 -OutFile cache/IdeaVim.zip"
+
 
 ##########################
 # VM artefacts / configs #
@@ -37,5 +40,5 @@ ubuntu_64_server: bin/ubuntu_64/ubuntu_64.ovf
 # Final vm configs #
 ####################
 
-haskell: bin/ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/intellij-haskell.zip
+haskell: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/intellij-haskell.zip cache/IdeaVim.zip haskell/colors.scheme.xml
 	packer build --force haskell.json

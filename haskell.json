@@ -22,6 +22,14 @@
 		"source": "cache/intellij-haskell.zip",
 		"destination": "intellij-haskell.zip"
 	}, {
+		"type": "file",
+		"source": "cache/IdeaVim.zip",
+		"destination": "IdeaVim.zip"
+	}, {
+		"type": "file",
+		"source": "haskell/colors.scheme.xml",
+		"destination": "colors.scheme.xml"
+	}, {
 		"type": "shell",
 		"inline": [
 
@@ -35,41 +43,48 @@
 			"echo 'Setting up IntelliJ'",
 			"echo '//TODO auto install plugin + add on first run execution'",
 			"echo 'user' | sudo -S tar xf ideaIC-2017.1.4.tar.gz -C /opt/",
-			"echo 'Creating first time install script'",
-			"mkdir Desktop",
-			"touch ~/Desktop/runme.sh",
-			"chmod +x ~/Desktop/runme.sh",
-			"echo 'sudo /opt/idea-IC-171.4694.23/idea.sh' >> ~/Desktop/runme.sh",
+			"IDEA_LOC=/opt/`ls /opt | grep 'idea'`",
+			"echo \"[Desktop Entry]\\nEncoding=UTF-8\\nName=IntelliJ IDEA\\nComment=IntelliJ IDEA\\nExec=${IDEA_LOC}/bin/idea.sh\\nIcon=${IDEA_LOC}/bin/idea.png\\nTerminal=false\\nStartupNotify=true\\nType=Application\" > IDEA.desktop",
+			"echo 'user' | sudo -S mv IDEA.desktop /usr/share/applications/IDEA.desktop",
+			"mkdir -p .IdeaIC2017.1/config/plugins",
+			"mv intellij-haskell.zip  .IdeaIC2017.1/config/plugins",
+			"mv IdeaVim.zip .IdeaIC2017.1/config/plugins",
+			"cd .IdeaIC2017.1/config/plugins",
+			"unzip intellij-haskell.zip",
+			"rm intellij-haskell.zip",
+			"unzip IdeaVim.zip",
+			"rm IdeaVim.zip",
+			"mkdir -p .IdeaIC2017.1/config/options",
+			"mv colors.scheme.xml .IdeaIC2017/config/options",
 
 
+			"#echo 'Fixes for slow machines'",
+			"#echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
+			"#echo 'Running apt-get update'",
+			"#echo 'user' | sudo -S apt-get update",
 
-			"echo 'Fixes for slow machines'",
-			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
-			"echo 'Running apt-get update'",
-			"echo 'user' | sudo -S apt-get update",
-
-			"echo 'Install zlib'",
-			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
+			"#echo 'Install zlib'",
+			"#echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
 			
 			
 			
-			"echo 'Install haskell'",
-			"wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
-			"chmod +x installhaskell.sh",
-			"echo 'user' | sudo -S ./installhaskell.sh",
-			"rm installhaskell.sh",
-			"stack setup",
-			"stack install hindent",
-			"stack install stylish-haskell",
+			"#echo 'Install haskell'",
+			"#wget -qO- https://get.haskellstack.org/ > installhaskell.sh",
+			"#chmod +x installhaskell.sh",
+			"#echo 'user' | sudo -S ./installhaskell.sh",
+			"#rm installhaskell.sh",
+			"#stack setup",
+			"#stack install hindent",
+			"#stack install stylish-haskell",
 
 
 
 			
-			"echo 'Install vim'",
-			"echo 'user' | sudo -S apt-get install vim -y",
+			"#echo 'Install vim'",
+			"#echo 'user' | sudo -S apt-get install vim -y",
 			
-			"echo 'Install git'",
-			"echo 'user' | sudo -S apt-get install git -y"
+			"#echo 'Install git'",
+			"#echo 'user' | sudo -S apt-get install git -y"
 		]
 	}]
 }
