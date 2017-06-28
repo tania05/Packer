@@ -70,6 +70,9 @@
 			"mv colors.scheme.xml .IdeaIC2017.1/config/options",
 			"mv laf.xml .IdeaIC2017.1/config/options",
 
+			"#Hidden dependency for the intellij-haskell plugin",
+			"echo 'user' | sudo -S apt-get install libtinfo-dev",
+
 
 
 
