@@ -80,9 +80,10 @@
 			"echo 'user' | sudo -S apt-get install openjdk-8-jdk openjdk-8-jre -y",
 
 
-			"echo 'Install MySql Server for user root/root",
-			"DEBIAN_FRONTEND=noninteractive echo 'user' | sudo -S apt-get -y install mysql-server",
-			"sudo -S mysqladmin -u root password root",
+			"echo 'Install MySql Server for user root/root'",
+			"sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'\"",
+			"sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'\"",
+			"DEBIAN_FRONTEND=noninteractive sudo -S apt-get -y install mysql-server",
 			
 			"echo 'Install vim'",
 			"echo 'user' | sudo -S apt-get install vim -y",
