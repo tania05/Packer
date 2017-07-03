@@ -40,5 +40,8 @@ ubuntu_64_server: bin/ubuntu_64/ubuntu_64.ovf
 # Final vm configs #
 ####################
 
-haskell: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/intellij-haskell.zip cache/IdeaVim.zip haskell/colors.scheme.xml
+haskell: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/intellij-haskell.zip cache/IdeaVim.zip haskell/colors.scheme.xml haskell/laf.xml
 	packer build --force haskell.json
+
+seng426: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/IdeaVim.zip haskell/colors.scheme.xml haskell/laf.xml
+	packer build --force seng426.json
