@@ -1,0 +1,96 @@
+{
+	"builders": [{
+		"type": "virtualbox-ovf",
+		"source_path": "bin/ubuntu_64_desktop/ubuntu_64_desktop.ovf",
+		"ssh_username": "user",
+		"ssh_password": "user",
+		"headless": true,
+		
+		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
+		"post_shutdown_delay": "10s",
+		
+		"output_directory": "bin/seng426",
+		"vm_name": "seng426"
+	}],
+	
+	"provisioners": [{
+		"type": "file",
+		"source": "cache/ideaIC-2017.1.4.tar.gz",
+		"destination": "ideaIC-2017.1.4.tar.gz"
+	}, {
+		"type": "file",
+		"source": "cache/IdeaVim.zip",
+		"destination": "IdeaVim.zip"
+	}, {
+		"type": "file",
+		"source": "haskell/colors.scheme.xml",
+		"destination": "colors.scheme.xml"
+	}, {
+		"type": "file",
+		"source": "haskell/laf.xml",
+		"destination": "laf.xml"
+	}, {
+		"type": "shell",
+		"inline": [
+
+			"echo 'Install VBoxAdditions'",
+			"mkdir mnt",
+			"echo 'user' | sudo -S mount --source VBoxGuestAdditions.iso --target mnt",
+			"echo 'user' | sudo -S mnt/VBoxLinuxAdditions.run || true",
+			"echo 'user' | sudo -S umount mnt",
+			"rmdir mnt",
+
+
+
+
+
+			"echo 'Setting up IntelliJ'",
+			"echo 'user' | sudo -S tar xf ideaIC-2017.1.4.tar.gz -C /opt/",
+			"IDEA_LOC=/opt/`ls /opt | grep 'idea'`",
+			"echo \"[Desktop Entry]\\nEncoding=UTF-8\\nName=IntelliJ IDEA\\nComment=IntelliJ IDEA\\nExec=${IDEA_LOC}/bin/idea.sh\\nIcon=${IDEA_LOC}/bin/idea.png\\nTerminal=false\\nStartupNotify=true\\nType=Application\" > IDEA.desktop",
+			"echo 'user' | sudo -S mv IDEA.desktop /usr/share/applications/IDEA.desktop",
+			"mkdir -p .IdeaIC2017.1/config/plugins",
+			"mv IdeaVim.zip .IdeaIC2017.1/config/plugins",
+
+			"cd .IdeaIC2017.1/config/plugins",
+			"unzip IdeaVim.zip",
+			"rm IdeaVim.zip",
+			"mkdir -p .IdeaIC2017.1/config/options",
+			"cd ~",
+
+			"mkdir -p .IdeaIC2017.1/config/options",
+			"mv colors.scheme.xml .IdeaIC2017.1/config/options",
+			"mv laf.xml .IdeaIC2017.1/config/options",
+
+
+
+
+
+			"echo 'Fixes for slow machines'",
+			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
+			"echo 'Running apt-get update'",
+			"echo 'user' | sudo -S apt-get update",
+
+			"echo 'Install zlib'",
+			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
+			
+			
+			
+			"echo 'Install OpenJDK 8'",
+			"echo 'user' | sudo -S apt-get install openjdk-8-jdk openjdk-8-jre -y",
+
+
+			"echo 'Install MySql Server for user root/root",
+			"DEBIAN_FRONTEND=noninteractive echo 'user' | sudo -S apt-get -y install mysql-server",
+			"sudo -S mysqladmin -u root password root",
+			
+			"echo 'Install vim'",
+			"echo 'user' | sudo -S apt-get install vim -y",
+			
+			"echo 'Install git and set vim as default editor'",
+			"echo 'user' | sudo -S apt-get install git -y",
+			"git config --global core.editor vim",
+			"git config --global merge.tool vimdiff"
+		]
+	}]
+}
