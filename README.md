@@ -1,4 +1,4 @@
-To use these files, first make sure packer and make are installed.
+To use these files, first make sure packer, oracle VM VirtualBox and make are installed.
 
 
 #Prerequisites
@@ -20,5 +20,6 @@ Install Virtualbox
 
 #Building / Running
 ```
-make ceng420
+make seng460
+& "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" import bin/seng460/seng460.ovf
 ```
