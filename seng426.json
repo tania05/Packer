@@ -81,9 +81,15 @@
 
 
 			"echo 'Install MySql Server for user root/root'",
-			"sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'\"",
-			"sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'\"",
+			"echo 'user' | sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'\"",
+			"echo 'user' | sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'\"",
 			"DEBIAN_FRONTEND=noninteractive sudo -S apt-get -y install mysql-server",
+
+			"echo 'Install npm'",
+			"echo 'user' | sudo -S apt-get install npm -y",
+
+			"echo 'Install maven'",
+			"echo 'user' | sudo -S apt-get install maven -y",
 			
 			"echo 'Install vim'",
 			"echo 'user' | sudo -S apt-get install vim -y",
