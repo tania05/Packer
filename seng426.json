@@ -89,7 +89,7 @@
 			"wget https://deb.nodesource.com/setup_6.x -O setup_npm.sh",
 			"chmod +x setup_npm.sh",
 			"echo 'user' | sudo -S ./setup_npm.sh",
-			"echo 'user' | sudo -S apt-get install nodejs -y"
+			"echo 'user' | sudo -S apt-get install nodejs -y",
 
 			"echo 'Install maven'",
 			"echo 'user' | sudo -S apt-get install maven -y",
