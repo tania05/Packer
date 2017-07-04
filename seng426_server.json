@@ -47,7 +47,10 @@
 			"DEBIAN_FRONTEND=noninteractive sudo -S apt-get -y install mysql-server",
 
 			"echo 'Install npm'",
-			"echo 'user' | sudo -S apt-get install npm -y",
+			"wget https://deb.nodesource.com/setup_6.x -O setup_npm.sh",
+			"chmod +x setup_npm.sh",
+			"echo 'user' | sudo -S ./setup_num.sh",
+			"echo 'user' | sudo -S apt-get install nodejs -y"
 
 			"echo 'Install maven'",
 			"echo 'user' | sudo -S apt-get install maven -y",
