@@ -45,3 +45,6 @@ haskell: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/intellij-haskell.z
 
 seng426: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/IdeaVim.zip haskell/colors.scheme.xml haskell/laf.xml
 	packer build --force seng426.json
+
+seng426_server: ubuntu_64_server
+	packer build --force seng426_server.json

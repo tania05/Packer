@@ -1,0 +1,64 @@
+{
+	"builders": [{
+		"type": "virtualbox-ovf",
+		"source_path": "bin/ubuntu_64/ubuntu_64.ovf",
+		"ssh_username": "user",
+		"ssh_password": "user",
+		"headless": true,
+		
+		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
+		"post_shutdown_delay": "10s",
+		
+		"output_directory": "bin/seng426_server",
+		"vm_name": "seng426_server"
+	}],
+	
+	"provisioners": [{
+		"type": "shell",
+		"inline": [
+
+			"echo 'Install VBoxAdditions'",
+			"mkdir mnt",
+			"echo 'user' | sudo -S mount --source VBoxGuestAdditions.iso --target mnt",
+			"echo 'user' | sudo -S mnt/VBoxLinuxAdditions.run || true",
+			"echo 'user' | sudo -S umount mnt",
+			"rmdir mnt",
+
+
+
+
+			"echo 'Fixes for slow machines'",
+			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
+			"echo 'Running apt-get update'",
+			"echo 'user' | sudo -S apt-get update",
+
+			"echo 'Install zlib'",
+			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
+			
+			
+			
+			"echo 'Install OpenJDK 8'",
+			"echo 'user' | sudo -S apt-get install openjdk-8-jdk openjdk-8-jre -y",
+
+
+			"echo 'Install MySql Server for user root/root'",
+			"echo 'user' | sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'\"",
+			"echo 'user' | sudo -S bash -c \"debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'\"",
+			"DEBIAN_FRONTEND=noninteractive sudo -S apt-get -y install mysql-server",
+
+			"echo 'Install npm'",
+			"echo 'user' | sudo -S apt-get install npm -y",
+
+			"echo 'Install maven'",
+			"echo 'user' | sudo -S apt-get install maven -y",
+			
+			"echo 'Install vim'",
+			"echo 'user' | sudo -S apt-get install vim -y",
+			
+			"echo 'Install git and set vim as default editor'",
+			"echo 'user' | sudo -S apt-get install git -y",
+			"git config --global core.editor vim",
+			"git config --global merge.tool vimdiff"
+		]
+	}]
+}
