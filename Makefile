@@ -16,6 +16,9 @@ cache/intellij-haskell.zip:
 cache/IdeaVim.zip:
 	powershell -NoProfile -Command "Invoke-WebRequest https://plugins.jetbrains.com/plugin/download?updateId=31805 -OutFile cache/IdeaVim.zip"
 
+cache/pycharm-community-2017.1.4.tar.gz:
+	powershell -NoProfile -Command "Invoke-WebRequest https://download.jetbrains.com/python/pycharm-community-2017.1.4.tar.gz -OutFile cache/pycharm-community-2017.1.4.tar.gz"
+
 
 ##########################
 # VM artefacts / configs #
@@ -48,3 +51,6 @@ seng426: ubuntu_64_desktop cache/ideaIC-2017.1.4.tar.gz cache/IdeaVim.zip haskel
 
 seng426_server: ubuntu_64_server
 	packer build --force seng426_server.json
+
+ceng420: ubuntu_64_desktop cache/pycharm-community-2017.1.4.tar.gz haskell/colors.scheme.xml haskell/laf.xml
+	packer build --force ceng420.json

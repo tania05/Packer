@@ -1,0 +1,90 @@
+{
+	"builders": [{
+		"type": "virtualbox-ovf",
+		"source_path": "bin/ubuntu_64_desktop/ubuntu_64_desktop.ovf",
+		"ssh_username": "user",
+		"ssh_password": "user",
+		"headless": true,
+		
+		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
+		"post_shutdown_delay": "10s",
+		
+		"output_directory": "bin/ceng420",
+		"vm_name": "ceng420"
+	}],
+	
+	"provisioners": [{
+		"type": "file",
+		"source": "cache/pycharm-community-2017.1.4.tar.gz",
+		"destination": "pycharm-community-2017.1.4.tar.gz"
+	}, {
+		"type": "file",
+		"source": "haskell/colors.scheme.xml",
+		"destination": "colors.scheme.xml"
+	}, {
+		"type": "file",
+		"source": "haskell/laf.xml",
+		"destination": "laf.xml"
+	}, {
+		"type": "shell",
+		"inline": [
+
+			"echo 'Install VBoxAdditions'",
+			"mkdir mnt",
+			"echo 'user' | sudo -S mount --source VBoxGuestAdditions.iso --target mnt",
+			"echo 'user' | sudo -S mnt/VBoxLinuxAdditions.run || true",
+			"echo 'user' | sudo -S umount mnt",
+			"rmdir mnt",
+
+
+
+
+
+			"echo 'Setting up PyCharm'",
+			"echo 'user' | sudo -S tar xf pycharm-community-2017.1.4.tar.gz -C /opt/",
+			"IDEA_LOC=/opt/`ls /opt | grep 'pycharm'`",
+			"echo \"[Desktop Entry]\\nEncoding=UTF-8\\nName=PyCharm\\nComment=PyCharm\\nExec=${IDEA_LOC}/bin/idea.sh\\nIcon=${IDEA_LOC}/bin/idea.png\\nTerminal=false\\nStartupNotify=true\\nType=Application\" > IDEA.desktop",
+			"echo 'user' | sudo -S mv IDEA.desktop /usr/share/applications/IDEA.desktop",
+			"mkdir -p .PyCharmCE2017.1/config/options",
+			"mv colors.scheme.xml .PyCharmCE2017.1/config/options",
+			"mv laf.xml .PyCharmCE2017.1/config/options",
+
+
+
+			"echo 'Fixes for slow machines'",
+			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
+			"echo 'Running apt-get update'",
+			"echo 'user' | sudo -S apt-get update",
+
+			"echo 'Install zlib'",
+			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
+			
+			
+			"echo 'Install git and set vim as default editor'",
+			"echo 'user' | sudo -S apt-add-repository ppa:git-core/ppa -y",
+			"echo 'user' | sudo -S apt-get update",
+			"echo 'user' | sudo -S apt-get install git -y",
+			"git config --global core.editor vim",
+			"git config --global merge.tool vimdiff",
+
+
+
+			"echo 'Install pip'",
+			"wget https://bootstrap.pypa.io/get-pip.py",
+			"echo 'user' | sudo -S -H python3 get-pip.py",
+			"rm get-pip.py",
+
+			"echo 'Install libs required for scikit'",
+			"echo 'user' | sudo -S apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran -y",
+
+
+			"echo 'Install pip libraries'",
+			"echo 'user' | sudo -S -H pip install scikit-learn",
+			"echo 'user' | sudo -S -H pip install numpy",
+			"echo 'user' | sudo -S -H pip install scipy",
+			"echo 'user' | sudo -S -H pip install pandas",
+			"echo 'user' | sudo -S -H pip install tensorflow"
+
+		]
+	}]
+}
