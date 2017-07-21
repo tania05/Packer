@@ -1,0 +1,39 @@
+{
+	"builders": [{
+		"type": "virtualbox-ovf",
+		"source_path": "bin/ubuntu_64_desktop/ubuntu_64_desktop.ovf",
+		"ssh_username": "user",
+		"ssh_password": "user",
+		"headless": true,
+		
+		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
+		"post_shutdown_delay": "10s",
+		
+		"output_directory": "bin/cookbook",
+		"vm_name": "cookbook"
+	}],
+	
+	"provisioners": [{
+		"type": "file",
+		"source": "cache/pycharm-community-2017.1.4.tar.gz",
+		"destination": "pycharm-community-2017.1.4.tar.gz"
+	}, {
+		"type": "file",
+		"source": "haskell/colors.scheme.xml",
+		"destination": "colors.scheme.xml"
+	}, {
+		"type": "file",
+		"source": "haskell/laf.xml",
+		"destination": "laf.xml"
+	}, {
+		"type": "shell",
+		"inline": [
+			"mkdir -p .vars",
+			"mkdir -p cookbooks"
+		]
+	}, {
+		"type": "file",
+		"source": "cookbooks/",
+		"destination": "cookbooks"
+	}]
+}

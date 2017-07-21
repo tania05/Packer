@@ -54,3 +54,9 @@ seng426_server: ubuntu_64_server
 
 ceng420: ubuntu_64_desktop cache/pycharm-community-2017.1.4.tar.gz haskell/colors.scheme.xml haskell/laf.xml
 	packer build --force ceng420.json
+
+ceng420_server: ubuntu_64_server	
+	packer build --force ceng420_server.json
+
+cookbook: ubuntu_64_desktop cache/pycharm-community-2017.1.4.tar.gz haskell/colors.scheme.xml haskell/laf.xml
+	packer build --force cookbook

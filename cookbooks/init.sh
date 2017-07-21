@@ -1,0 +1,1 @@
+echo 'user' > .vars/sudoPassword

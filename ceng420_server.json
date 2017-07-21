@@ -1,0 +1,68 @@
+{
+	"builders": [{
+		"type": "virtualbox-ovf",
+		"source_path": "bin/ubuntu_64/ubuntu_64.ovf",
+		"ssh_username": "user",
+		"ssh_password": "user",
+		"headless": true,
+		
+		"shutdown_command": "echo 'user' | sudo -S shutdown -P now",
+		"post_shutdown_delay": "10s",
+		
+		"output_directory": "bin/ceng420_server",
+		"vm_name": "ceng420_server"
+	}],
+	
+	"provisioners": [{
+		"type": "shell",
+		"inline": [
+
+			"echo 'Install VBoxAdditions'",
+			"mkdir mnt",
+			"echo 'user' | sudo -S mount --source VBoxGuestAdditions.iso --target mnt",
+			"echo 'user' | sudo -S mnt/VBoxLinuxAdditions.run || true",
+			"echo 'user' | sudo -S umount mnt",
+			"rmdir mnt",
+
+
+			"echo 'Add apt-add-repository for servers'",
+			"ehco 'user' | sudo -S apt-get install software-properties-common -y",
+
+
+
+
+			"echo 'Fixes for slow machines'",
+			"echo 'user' | sudo -S rm --force /var/lib/dpkg/lock",
+			"echo 'Running apt-get update'",
+			"echo 'user' | sudo -S apt-get update",
+
+			"echo 'Install zlib'",
+			"echo 'user' | sudo -S apt-get install zlibc zlib1g zlib1g-dev",
+			
+			
+			"echo 'Install git and set vim as default editor'",
+			"echo 'user' | sudo -S apt-add-repository ppa:git-core/ppa -y",
+			"echo 'user' | sudo -S apt-get update",
+			"echo 'user' | sudo -S apt-get install git -y",
+
+
+
+			"echo 'Install pip'",
+			"wget https://bootstrap.pypa.io/get-pip.py",
+			"echo 'user' | sudo -S -H python3 get-pip.py",
+			"rm get-pip.py",
+
+			"echo 'Install libs required for scikit'",
+			"echo 'user' | sudo -S apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran -y",
+
+
+			"echo 'Install pip libraries'",
+			"echo 'user' | sudo -S -H pip install scikit-learn",
+			"echo 'user' | sudo -S -H pip install numpy",
+			"echo 'user' | sudo -S -H pip install scipy",
+			"echo 'user' | sudo -S -H pip install pandas",
+			"echo 'user' | sudo -S -H pip install tensorflow"
+
+		]
+	}]
+}
